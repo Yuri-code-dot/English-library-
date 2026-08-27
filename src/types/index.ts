@@ -65,6 +65,7 @@ export interface Book {
   title: string;
   authorSlug: string;
   publicationYear: number;
+  addedAt: string; // ISO date used to calculate archive age and status
   genre: Genre;
   period: LiteraryPeriod;
   language: string;

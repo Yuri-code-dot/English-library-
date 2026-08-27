@@ -3,6 +3,7 @@ import { ContentRail } from "../components/home/ContentRail";
 import { books, featuredBooks } from "../data/books";
 import { subjects } from "../data/subjects";
 import { Link } from "react-router-dom";
+import { NewArchiveShowcase } from "../components/home/NewArchiveShowcase";
 
 export function HomePage() {
   const romanticism = books.filter((b) => b.period === "romanticism");
@@ -13,6 +14,8 @@ export function HomePage() {
   return (
     <div>
       <HeroCarousel books={featuredBooks()} />
+
+      <NewArchiveShowcase books={books} />
 
       <div className="mx-auto max-w-[1600px] divide-y divide-border/50">
         <ContentRail
