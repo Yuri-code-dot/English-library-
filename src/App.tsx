@@ -24,7 +24,7 @@ function NotFoundPage() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/English-library-">
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
