@@ -64,15 +64,13 @@ export function BookDetailPage() {
               </span>
             </div>
             {book.readingUrl && (
-              <a
-                href={book.readingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to={`/read/${book.slug}`}
                 className="mt-5 inline-flex items-center gap-2 rounded-md bg-wine px-5 py-3 font-medium text-ivory shadow-lg shadow-wine/20 transition-colors hover:bg-wine-bright"
               >
                 <BookOpen size={17} />
                 Read Now
-              </a>
+              </Link>
             )}
           </div>
         </div>
