@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import type { Book } from "../../types";
 import { authorBySlug } from "../../data/authors";
+import { syllabusAuthorBySlug } from "../../data/syllabusAuthors";
 
 export function BookCard({ book }: { book: Book }) {
-  const author = authorBySlug(book.authorSlug);
+  const author = authorBySlug(book.authorSlug) ?? syllabusAuthorBySlug(book.authorSlug);
 
   return (
     <Link
