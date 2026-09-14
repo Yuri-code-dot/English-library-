@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { subjectBySlug } from "../data/subjects";
 import { books } from "../data/books";
 import { syllabusBooks } from "../data/syllabusBooks";
