@@ -5,6 +5,18 @@ import type { Book } from "../types";
 // gradually without losing the syllabus mapping.
 export const syllabusBooks: Book[] = [
   {
+    slug: "the-fact-of-blackness", title: "The Fact of Blackness", authorSlug: "frantz-fanon", publicationYear: 1952,
+    genre: "theory", period: "postcolonial", language: "English", subjectSlugs: ["postcolonial-literatures"],
+    description: "Fanon's chapter examines the psychological effects of racialisation and colonial society on Black identity and self-perception.",
+    themes: ["Race", "Colonialism", "Identity", "Psychology"], sourceId: "external-copyright", license: "Copyrighted work — catalogue metadata only",
+  },
+  {
+    slug: "colonial-influence-postcolonial-intertextuality", title: "Colonial Influence, Postcolonial Intertextuality", authorSlug: "harish-trivedi", publicationYear: 2007,
+    genre: "criticism", period: "postcolonial", language: "English", subjectSlugs: ["postcolonial-literatures"],
+    description: "Trivedi examines the relationship between Western and Indian literatures through the histories of colonial influence and postcolonial literary exchange.",
+    themes: ["Colonial influence", "Intertextuality", "Indian literature", "Postcolonial studies"], sourceId: "external-copyright", license: "Copyrighted work — catalogue metadata only",
+  },
+  {
     slug: "a-house-for-mr-biswas", title: "A House for Mr Biswas", authorSlug: "vs-naipaul", publicationYear: 1961,
     genre: "novel", period: "postcolonial", language: "English", subjectSlugs: ["postcolonial-literatures"],
     description: "Naipaul's novel follows Mohun Biswas's long struggle for an independent home, using domestic life to explore colonial society, class, family, and belonging.",
@@ -25,7 +37,7 @@ export const syllabusBooks: Book[] = [
   {
     slug: "the-breast-giver", title: "The Breast Giver", authorSlug: "gayatri-spivak", publicationYear: 1988,
     genre: "short-story", period: "postcolonial", language: "English", subjectSlugs: ["postcolonial-literatures"],
-    description: "Spivak's reading of Mahasweta Devi's story examines motherhood, exploitation, caste, class, and the politics of representation.",
+    description: "A syllabus record for the text associated with Mahasweta Devi and discussed by Gayatri Spivak, examining motherhood, exploitation, caste, class, and representation.",
     themes: ["Motherhood", "Caste and class", "Exploitation", "Representation"], sourceId: "external-copyright", license: "Copyrighted work — catalogue metadata only",
   },
   {
