@@ -1,17 +1,22 @@
 import { useParams, Link } from "react-router-dom";
 import { BookOpen, ExternalLink } from "lucide-react";
 import { bookBySlug, books } from "../data/books";
+import { syllabusBookBySlug, syllabusBooks } from "../data/syllabusBooks";
 import { authorBySlug } from "../data/authors";
+import { syllabusAuthorBySlug } from "../data/syllabusAuthors";
 import { periodBySlug } from "../data/periods";
 import { subjectBySlug } from "../data/subjects";
 import { sources } from "../data/sources";
+import { bookFunFacts } from "../data/funFacts";
 import { BookCard } from "../components/library/BookCard";
 import { SourceCredit } from "../components/ui/SourceCredit";
 import { EmptyState } from "../components/ui/Primitives";
 
+const allBooks = [...books, ...syllabusBooks];
+
 export function BookDetailPage() {
   const { slug } = useParams();
-  const book = slug ? bookBySlug(slug) : undefined;
+  const book = slug ? (bookBySlug(slug) ?? syllabusBookBySlug(slug)) : undefined;
 
   if (!book) {
     return (
@@ -21,11 +26,12 @@ export function BookDetailPage() {
     );
   }
 
-  const author = authorBySlug(book.authorSlug);
+  const author = authorBySlug(book.authorSlug) ?? syllabusAuthorBySlug(book.authorSlug);
   const period = periodBySlug(book.period);
   const readingSource = sources[book.sourceId];
-  const relatedBooks = books.filter((b) => book.relatedBookSlugs?.includes(b.slug));
+  const relatedBooks = allBooks.filter((b) => book.relatedBookSlugs?.includes(b.slug));
   const subjects = book.subjectSlugs.map(subjectBySlug).filter(Boolean);
+  const funFact = bookFunFacts[book.slug];
 
   return (
     <div>
@@ -121,6 +127,14 @@ export function BookDetailPage() {
           </Section>
         )}
 
+        {funFact && (
+          <Section title="Fun Fact">
+            <div className="rounded-lg border border-bronze/30 bg-surface p-4 shadow-lg shadow-black/10">
+              <p className="text-sm leading-relaxed text-ivory-dim">💡 {funFact}</p>
+            </div>
+          </Section>
+        )}
+
         {/* Signature element: curriculum lineage thread */}
         {subjects.length > 0 && (
           <Section title="Curriculum Connections">
@@ -139,8 +153,6 @@ export function BookDetailPage() {
                       <span>{subject.paperCode}</span>
                       <LineageArrow />
                       <span className="text-bronze-bright">{subject.name}</span>
-                      <LineageArrow />
-                      <span>{author?.name}</span>
                       <LineageArrow />
                       <span className="text-ivory">{book.title}</span>
                     </div>
@@ -166,7 +178,7 @@ export function BookDetailPage() {
             <div className="rounded-lg border border-border bg-surface p-4">
               <p className="text-ivory-dim">
                 <span className="text-ivory-faint">Reading text: </span>
-                {readingSource?.name}
+                {readingSource?.name ?? "Bibliographic record"}
               </p>
               <p className="mt-1 text-ivory-dim">
                 <span className="text-ivory-faint">License: </span>
