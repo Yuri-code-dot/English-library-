@@ -15,6 +15,8 @@ export const bookFunFacts: Record<string, string> = {
   "mending-wall": "Frost's 'Mending Wall' was first published in 1914 and became one of his most frequently anthologised poems.",
   "the-negro-speaks-of-rivers": "Hughes wrote The Negro Speaks of Rivers when he was only seventeen years old.",
   "the-language-of-african-literature": "The Language of African Literature is a chapter from Ngũgĩ wa Thiong'o's Decolonising the Mind, a major text in language-and-colonialism debates.",
+  "the-fact-of-blackness": "The Fact of Blackness is the English title commonly used for the chapter 'The Fact of Blackness' from Fanon's Black Skin, White Masks.",
+  "colonial-influence-postcolonial-intertextuality": "Trivedi's work is useful for studying how colonial literary relationships can continue through adaptation, influence, and intertextual exchange.",
   "a-far-cry-from-africa": "Walcott's poem was written in response to the Mau Mau Uprising in Kenya and the violence surrounding it.",
   "the-white-fiends": "The poem belongs to Hughes's body of work confronting racial violence and white supremacy directly.",
   "small-towns-and-the-river": "Mamang Dai's writing frequently connects landscape and river imagery with memory, community, and life in Northeast India.",
