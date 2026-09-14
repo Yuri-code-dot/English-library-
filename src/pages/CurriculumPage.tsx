@@ -16,6 +16,12 @@ export function CurriculumPage() {
         {semesters().map((sem) => (
           <div key={sem}>
             <h2 className="font-display text-xl font-semibold text-ivory">Semester {toRoman(sem)}</h2>
+            {sem === 5 && (
+              <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ivory-faint">
+                <span>English Literature — Major</span>
+                <span className="font-mono uppercase tracking-wide">14 Credits · 4 Courses</span>
+              </div>
+            )}
             <div className="mt-4 divide-y divide-border/70 border-y border-border/70">
               {subjectsBySemester(sem).map((subject, i) => (
                 <Link

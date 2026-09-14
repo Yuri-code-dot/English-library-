@@ -86,7 +86,14 @@ export interface Subject {
   semester: number;
   description: string;
   authorSlugs: string[];
+  authorNames?: string[];
   bookSlugs: string[];
+  credits?: number;
+  modules?: string[];
+  primaryTexts?: string[];
+  poetry?: string[];
+  concepts?: string[];
+  theorists?: string[];
   criticism?: string[];
   supplementaryReading?: { title: string; url?: string }[];
   externalResources?: { label: string; url: string }[];
