@@ -1,9 +1,14 @@
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { subjectBySlug } from "../data/subjects";
 import { books } from "../data/books";
+import { syllabusBooks } from "../data/syllabusBooks";
 import { authors } from "../data/authors";
+import { syllabusAuthors } from "../data/syllabusAuthors";
 import { BookCard } from "../components/library/BookCard";
 import { EmptyState } from "../components/ui/Primitives";
+
+const allBooks = [...books, ...syllabusBooks];
+const allAuthors = [...authors, ...syllabusAuthors];
 
 export function SubjectDetailPage() {
   const { slug } = useParams();
@@ -17,8 +22,8 @@ export function SubjectDetailPage() {
     );
   }
 
-  const subjectBooks = books.filter((b) => subject.bookSlugs.includes(b.slug));
-  const subjectAuthors = authors.filter((a) => subject.authorSlugs.includes(a.slug));
+  const subjectBooks = allBooks.filter((b) => subject.bookSlugs.includes(b.slug));
+  const subjectAuthors = allAuthors.filter((a) => subject.authorSlugs.includes(a.slug));
   const linkedAuthorNames = new Set(subjectAuthors.map((a) => a.name));
   const displayAuthorNames = (subject.authorNames ?? []).filter((name) => !linkedAuthorNames.has(name));
 
