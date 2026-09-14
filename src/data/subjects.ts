@@ -14,7 +14,7 @@ export const subjects: Subject[] = [
       "Modern European drama examines theatre that challenged inherited dramatic forms, social realism, and conventional ideas of character, conflict, and performance.",
     authorSlugs: [],
     authorNames: ["August Strindberg", "Bertolt Brecht", "Samuel Beckett", "Harold Pinter"],
-    bookSlugs: [],
+    bookSlugs: ["the-father", "life-of-galileo", "waiting-for-godot", "the-birthday-party"],
     modules: ["Modern European drama and its formal departures", "Theatre, politics, alienation, and the absurd"],
     primaryTexts: [
       "August Strindberg — The Father",
@@ -46,7 +46,7 @@ export const subjects: Subject[] = [
       "Robert Frost",
       "Langston Hughes",
     ],
-    bookSlugs: ["dickinson-poems"],
+    bookSlugs: ["dickinson-poems", "the-old-man-and-the-sea", "all-my-sons", "the-purloined-letter", "up-from-slavery-chapter-one", "i-know-why-the-caged-bird-sings-chapter-fifteen", "dry-september", "o-captain-my-captain", "this-was-a-poet", "i-heard-a-fly-buzz", "mending-wall", "the-negro-speaks-of-rivers"],
     modules: ["American fiction and drama", "Autobiography, race, and self-making", "American poetry and poetic voice"],
     primaryTexts: [
       "Ernest Hemingway — The Old Man and the Sea",
@@ -76,7 +76,7 @@ export const subjects: Subject[] = [
       "Postcolonial literatures examine how writers reclaim language, history, culture, and identity in the aftermath of empire and amid ongoing global inequalities.",
     authorSlugs: [],
     authorNames: ["Ngũgĩ wa Thiong'o", "Derek Walcott", "Langston Hughes", "Mamang Dai"],
-    bookSlugs: [],
+    bookSlugs: ["the-language-of-african-literature", "a-far-cry-from-africa", "the-white-fiends", "small-towns-and-the-river"],
     modules: ["Language, power, and decolonisation", "Poetry, nation, and place", "Postcolonial identity and resistance"],
     primaryTexts: [
       "Ngũgĩ wa Thiong'o — The Language of African Literature, from Decolonising the Mind",
@@ -113,7 +113,7 @@ export const subjects: Subject[] = [
       "Toril Moi",
       "Kumkum Sangari & Sudesh Vaid",
     ],
-    bookSlugs: ["frankenstein", "pride-and-prejudice", "mrs-dalloway", "dickinson-poems"],
+    bookSlugs: ["frankenstein", "pride-and-prejudice", "mrs-dalloway", "dickinson-poems", "the-second-sex-introduction", "a-room-of-ones-own", "a-literature-of-their-own", "in-other-worlds", "under-western-eyes", "the-madwoman-in-the-attic", "sexual-textual-politics", "recasting-women"],
     modules: ["Women's writing and literary traditions", "Feminist literary criticism", "Gender, identity, and representation"],
     concepts: [
       "Women's writing",

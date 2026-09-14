@@ -15,6 +15,13 @@ export const sources: Record<string, Source> = {
     license: "Varies by file — see individual attribution",
     accessType: "public-domain",
   },
+  "external-copyright": {
+    id: "external-copyright",
+    name: "Publisher / rights-holder source",
+    url: "https://www.copyright.gov/",
+    license: "Copyrighted work — catalogue metadata only",
+    accessType: "external-link",
+  },
   "project-gutenberg": {
     id: "project-gutenberg",
     name: "Project Gutenberg",
