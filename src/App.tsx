@@ -13,6 +13,7 @@ import { GenresPage } from "./pages/GenresPage";
 import { SearchPage } from "./pages/SearchPage";
 import { ResourcesPage, SourcesCreditsPage } from "./pages/ResourcesPage";
 import { ReaderPage } from "./pages/ReaderPage";
+import ScholarsTrialPage from "./pages/ScholarsTrialPage";
 
 function NotFoundPage() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/read/:slug" element={<ReaderPage />} />
           <Route path="/curriculum" element={<CurriculumPage />} />
           <Route path="/curriculum/:slug" element={<SubjectDetailPage />} />
+          <Route path="/scholars-trial" element={<ScholarsTrialPage />} />
           <Route path="/authors" element={<AuthorsPage />} />
           <Route path="/authors/:slug" element={<AuthorDetailPage />} />
           <Route path="/periods" element={<PeriodsPage />} />
