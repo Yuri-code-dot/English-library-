@@ -6,6 +6,7 @@ const NAV_LINKS = [
   { label: "Home", to: "/" },
   { label: "Library", to: "/library" },
   { label: "Curriculum", to: "/curriculum" },
+  { label: "Scholar's Trial", to: "/scholars-trial" },
   { label: "Authors", to: "/authors" },
   { label: "Periods", to: "/periods" },
   { label: "Genres", to: "/genres" },
@@ -71,7 +72,6 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {open && (
         <nav className="border-t border-border bg-ink px-4 py-3 md:hidden animate-fade-in">
           <div className="flex flex-col gap-1">
