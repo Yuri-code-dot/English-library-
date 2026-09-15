@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, BookOpen, ChevronDown, ChevronUp, ExternalLink, Minus, Plus } from "lucide-react";
+import { ArrowLeft, BookOpen, ChevronDown, ChevronUp, ExternalLink, Minus, Plus, Sparkles } from "lucide-react";
 import { bookBySlug } from "../data/books";
+import { syllabusBookBySlug } from "../data/syllabusBooks";
 import { authorBySlug } from "../data/authors";
+import { syllabusAuthorBySlug } from "../data/syllabusAuthors";
 import { readingTexts } from "../data/readingTexts";
 import { EmptyState } from "../components/ui/Primitives";
 
@@ -42,11 +44,13 @@ function formatBlock(block: string) {
 
 export function ReaderPage() {
   const { slug } = useParams();
-  const book = slug ? bookBySlug(slug) : undefined;
-  const author = book ? authorBySlug(book.authorSlug) : undefined;
+  const book = slug ? bookBySlug(slug) ?? syllabusBookBySlug(slug) : undefined;
+  const author = book ? authorBySlug(book.authorSlug) ?? syllabusAuthorBySlug(book.authorSlug) : undefined;
   const rawText = slug ? readingTexts[slug] : undefined;
   const [fontSize, setFontSize] = useState(18);
   const [showContents, setShowContents] = useState(true);
+  const [mode, setMode] = useState<"original" | "study">("original");
+  const [progress, setProgress] = useState(0);
 
   const blocks = useMemo(() => {
     if (!rawText) return [];
@@ -65,6 +69,16 @@ export function ReaderPage() {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [slug]);
 
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(scrollable > 0 ? Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100)) : 0);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [mode, blocks.length]);
+
   if (!book || !rawText) {
     return (
       <div className="mx-auto max-w-[1000px] px-4 py-16 sm:px-6 lg:px-10">
@@ -80,7 +94,11 @@ export function ReaderPage() {
 
   return (
     <div className="min-h-screen bg-ink">
-      <header className="border-b border-border/70 bg-ink/95">
+      <div className="fixed left-0 right-0 top-0 z-[60] h-0.5 bg-border/30">
+        <div className="h-full bg-bronze transition-[width] duration-150" style={{ width: `${progress}%` }} />
+      </div>
+
+      <header className="border-b border-border/70 bg-ink/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1000px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-10">
           <Link
             to={`/library/${book.slug}`}
@@ -96,80 +114,148 @@ export function ReaderPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1000px] px-4 py-10 sm:px-6 sm:py-14 lg:px-10">
-        <div className="max-w-3xl">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-bronze-bright">Reading room</p>
-          <h1 className="mt-2 font-display text-3xl font-semibold leading-tight text-ivory sm:text-5xl">{book.title}</h1>
-          <p className="mt-3 text-sm text-ivory-faint">
-            {author?.name} · {book.publicationYear} · Read inside the library
-          </p>
+      <main className="mx-auto max-w-[1000px] px-4 py-8 sm:px-6 sm:py-12 lg:px-10">
+        <div className="mx-auto max-w-3xl">
+          <header>
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-bronze-bright">Reading room</p>
+            <h1 className="mt-2 font-display text-3xl font-semibold leading-tight text-ivory sm:text-5xl">{book.title}</h1>
+            <p className="mt-3 text-sm text-ivory-faint">
+              {author?.name} · {book.publicationYear} · {Math.round(progress)}% read
+            </p>
+          </header>
 
-          <div className="mt-8 flex flex-wrap items-center gap-2 rounded-lg border border-border bg-surface p-3">
-            <button
-              type="button"
-              onClick={() => setShowContents((visible) => !visible)}
-              className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs text-ivory-dim transition-colors hover:border-bronze/50 hover:text-ivory"
-              aria-expanded={showContents}
-            >
-              {showContents ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-              Contents {headings.length > 0 ? `(${headings.length})` : ""}
-            </button>
-            <div className="ml-auto flex items-center gap-1">
-              <span className="mr-2 font-mono text-[10px] uppercase tracking-wider text-ivory-faint">Text size</span>
+          <div className="sticky top-16 z-40 mt-7 rounded-xl border border-border bg-surface/95 p-2 shadow-xl shadow-black/20 backdrop-blur-md">
+            <div className="grid grid-cols-2 gap-1 rounded-lg bg-ink/50 p-1">
               <button
                 type="button"
-                onClick={() => setFontSize((size) => Math.max(15, size - 1))}
-                className="rounded-md border border-border p-2 text-ivory-dim transition-colors hover:border-bronze/50 hover:text-ivory"
-                aria-label="Decrease text size"
+                onClick={() => setMode("original")}
+                className={`rounded-md px-3 py-2.5 text-sm font-semibold transition-colors ${
+                  mode === "original" ? "bg-surface-raised text-ivory shadow-sm" : "text-ivory-faint hover:text-ivory"
+                }`}
               >
-                <Minus size={14} />
+                Original Text
               </button>
               <button
                 type="button"
-                onClick={() => setFontSize((size) => Math.min(24, size + 1))}
-                className="rounded-md border border-border p-2 text-ivory-dim transition-colors hover:border-bronze/50 hover:text-ivory"
-                aria-label="Increase text size"
+                onClick={() => setMode("study")}
+                className={`inline-flex items-center justify-center gap-2 rounded-md px-3 py-2.5 text-sm font-semibold transition-colors ${
+                  mode === "study" ? "bg-surface-raised text-bronze-bright shadow-sm" : "text-ivory-faint hover:text-ivory"
+                }`}
               >
-                <Plus size={14} />
+                <Sparkles size={14} />
+                Study Edition
               </button>
             </div>
+
+            {mode === "original" && (
+              <div className="mt-2 flex flex-wrap items-center gap-2 px-1 pb-1 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowContents((visible) => !visible)}
+                  className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs text-ivory-dim transition-colors hover:border-bronze/50 hover:text-ivory"
+                  aria-expanded={showContents}
+                >
+                  {showContents ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                  Contents {headings.length > 0 ? `(${headings.length})` : ""}
+                </button>
+                <div className="ml-auto flex items-center gap-1">
+                  <span className="mr-1 hidden font-mono text-[10px] uppercase tracking-wider text-ivory-faint sm:inline">Text size</span>
+                  <button
+                    type="button"
+                    onClick={() => setFontSize((size) => Math.max(15, size - 1))}
+                    className="rounded-md border border-border p-2 text-ivory-dim transition-colors hover:border-bronze/50 hover:text-ivory"
+                    aria-label="Decrease text size"
+                  >
+                    <Minus size={14} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFontSize((size) => Math.min(24, size + 1))}
+                    className="rounded-md border border-border p-2 text-ivory-dim transition-colors hover:border-bronze/50 hover:text-ivory"
+                    aria-label="Increase text size"
+                  >
+                    <Plus size={14} />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
-          {showContents && headings.length > 0 && (
-            <nav className="mt-4 rounded-lg border border-border bg-surface p-4" aria-label="Table of contents">
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-bronze">In this edition</p>
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                {headings.map(({ block, index }) => (
-                  <a
-                    key={`${block}-${index}`}
-                    href={`#reading-block-${index}`}
-                    className="truncate text-sm text-ivory-dim transition-colors hover:text-bronze-bright"
-                  >
-                    {block}
-                  </a>
-                ))}
-              </div>
-            </nav>
-          )}
+          {mode === "original" ? (
+            <>
+              {showContents && headings.length > 0 && (
+                <nav className="mt-4 rounded-xl border border-border bg-surface p-4" aria-label="Table of contents">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-bronze">In this edition</p>
+                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                    {headings.map(({ block, index }) => (
+                      <a
+                        key={`${block}-${index}`}
+                        href={`#reading-block-${index}`}
+                        className="truncate text-sm text-ivory-dim transition-colors hover:text-bronze-bright"
+                      >
+                        {block}
+                      </a>
+                    ))}
+                  </div>
+                </nav>
+              )}
 
-          <article className="mt-10 border-t border-border/70 pt-8" style={textStyle}>
-            {blocks.map((block, index) => {
-              const heading = isHeading(block);
-              return heading ? (
-                <h2
-                  id={`reading-block-${index}`}
-                  key={`${index}-${block}`}
-                  className="mb-5 mt-12 scroll-mt-8 font-display text-2xl font-semibold leading-tight text-ivory first:mt-0 sm:text-3xl"
-                >
-                  {block}
-                </h2>
-              ) : (
-                <p key={`${index}-${block.slice(0, 20)}`} className="mb-6 max-w-3xl text-ivory-dim">
-                  {block}
+              <article className="mt-10 border-t border-border/70 pt-8" style={textStyle}>
+                {blocks.map((block, index) => {
+                  const heading = isHeading(block);
+                  return heading ? (
+                    <h2
+                      id={`reading-block-${index}`}
+                      key={`${index}-${block}`}
+                      className="mb-5 mt-12 scroll-mt-36 font-display text-2xl font-semibold leading-tight text-ivory first:mt-0 sm:text-3xl"
+                    >
+                      {block}
+                    </h2>
+                  ) : (
+                    <p key={`${index}-${block.slice(0, 20)}`} className="mb-6 max-w-3xl text-ivory-dim">
+                      {block}
+                    </p>
+                  );
+                })}
+              </article>
+            </>
+          ) : (
+            <section className="mt-8 space-y-6">
+              <div className="rounded-xl border border-border bg-surface p-6 sm:p-8">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-bronze">Study Edition</p>
+                <h2 className="mt-2 font-display text-2xl font-semibold text-ivory">Read with context</h2>
+                <p className="mt-3 text-sm leading-7 text-ivory-faint">
+                  This layer is designed for study rather than replacing the original text. Use the original edition for the work itself, then return here for catalogue-level context and revision points.
                 </p>
-              );
-            })}
-          </article>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <section className="rounded-xl border border-border bg-surface p-6">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-bronze">About the text</p>
+                  <p className="mt-3 text-sm leading-7 text-ivory-dim">{book.description}</p>
+                </section>
+                <section className="rounded-xl border border-border bg-surface p-6">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-bronze">Key themes</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {book.themes.map((theme) => (
+                      <span key={theme} className="rounded-full border border-border bg-surface-raised px-3 py-1.5 text-xs text-ivory-dim">
+                        {theme}
+                      </span>
+                    ))}
+                  </div>
+                </section>
+              </div>
+
+              <Link
+                to="/scholars-trial"
+                className="group block rounded-xl border border-bronze/30 bg-surface p-6 transition-colors hover:border-bronze/60 hover:bg-surface-raised"
+              >
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-bronze">Next step</p>
+                <h2 className="mt-2 font-display text-xl font-semibold text-ivory group-hover:text-bronze-bright">Take The Scholar's Trial</h2>
+                <p className="mt-2 text-sm leading-6 text-ivory-faint">Test your understanding after reading. Practice questions are kept separate from verified university papers.</p>
+              </Link>
+            </section>
+          )}
 
           <footer className="mt-12 border-t border-border/70 pt-6 text-sm text-ivory-faint">
             <p>
