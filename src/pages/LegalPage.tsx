@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 const lastUpdated = "September 16, 2026";
 const repo = "https://github.com/Yuri-code-dot/English-library-";
+const projectEmail = "tensoramaxstudio@gmail.com";
 
 function LegalLayout({ eyebrow, title, children }: { eyebrow: string; title: string; children: ReactNode }) {
   return (
@@ -20,7 +21,7 @@ export function PrivacyPage() {
     <section><h2>Local browser storage</h2><p className="mt-2">Reading preferences such as reader font size may be stored in your browser using localStorage. This stays on your device and can be removed by clearing the site data.</p></section>
     <section><h2>Hosting and third parties</h2><p className="mt-2">The site is hosted through GitHub Pages. GitHub states that visitors to GitHub Pages sites may have IP addresses logged and stored for security. The library also uses or links to services such as Google Fonts, Wikimedia Commons, and public-domain text archives, which have their own policies.</p></section>
     <section><h2>External links</h2><p className="mt-2">External archives, books, images, and services are outside this project and control their own privacy practices.</p></section>
-    <section><h2>Contact</h2><p className="mt-2">For questions or corrections, use the <a href={repo} target="_blank" rel="noopener noreferrer">project GitHub repository</a> until a dedicated project email is published.</p></section>
+    <section><h2>Contact</h2><p className="mt-2">For questions, corrections, or privacy requests, email <a href={`mailto:${projectEmail}`}>{projectEmail}</a> or use the <a href={repo} target="_blank" rel="noopener noreferrer">project GitHub repository</a>.</p></section>
   </LegalLayout>;
 }
 
@@ -38,13 +39,13 @@ export function TermsPage() {
     <section><h2>Content and copyright</h2><p className="mt-2">The project does not claim ownership of third-party literary works, portraits, scans, or other materials. Source and attribution information is provided where available. Verify the applicable rights before redistributing material.</p></section>
     <section><h2>External services</h2><p className="mt-2">External archives and services control their own availability, content, privacy practices, and terms.</p></section>
     <section><h2>Availability</h2><p className="mt-2">The catalogue is experimental and may contain omissions, corrections, broken links, or temporary outages. Content may change without notice.</p></section>
-    <section><h2>Feedback</h2><p className="mt-2">Please report incorrect attribution, broken sources, or catalogue errors through the <a href={repo} target="_blank" rel="noopener noreferrer">project GitHub repository</a>.</p></section>
+    <section><h2>Feedback</h2><p className="mt-2">Please report incorrect attribution, broken sources, or catalogue errors by emailing <a href={`mailto:${projectEmail}`}>{projectEmail}</a> or through the <a href={repo} target="_blank" rel="noopener noreferrer">project GitHub repository</a>.</p></section>
   </LegalLayout>;
 }
 
 export function ContactPage() {
   return <LegalLayout eyebrow="Project" title="Contact">
-    <section><h2>Get in touch</h2><p className="mt-2">For feedback, corrections, source issues, or project suggestions, use the <a href={repo} target="_blank" rel="noopener noreferrer">project GitHub repository</a>.</p></section>
-    <section><h2>Project email</h2><p className="mt-2">A dedicated contact email will be added here once the project email address is finalized.</p></section>
+    <section><h2>Get in touch</h2><p className="mt-2">For feedback, corrections, source issues, privacy requests, or project suggestions, email <a href={`mailto:${projectEmail}`}>{projectEmail}</a> or use the <a href={repo} target="_blank" rel="noopener noreferrer">project GitHub repository</a>.</p></section>
+    <section><h2>Project email</h2><p className="mt-2"><a href={`mailto:${projectEmail}`}>{projectEmail}</a></p></section>
   </LegalLayout>;
 }
