@@ -15,8 +15,7 @@ import { ResourcesPage, SourcesCreditsPage } from "./pages/ResourcesPage";
 import { ReaderPage } from "./pages/ReaderPage";
 import ScholarsTrialPage from "./pages/ScholarsTrialPage";
 
-const isVercel = import.meta.env.VERCEL === "1";
-const routerBasename = isVercel ? "/" : "/English-library-";
+const routerBasename = window.location.pathname.startsWith("/English-library-") ? "/English-library-" : "/";
 
 function NotFoundPage() {
   return (
