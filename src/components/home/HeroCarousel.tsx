@@ -28,26 +28,24 @@ export function HeroCarousel({ books }: { books: Book[] }) {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* Background layers — crossfade */}
-      {books.map((b, i) => (
-        <div
-          key={b.slug}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            i === active ? "opacity-100" : "opacity-0"
-          }`}
-          aria-hidden={i !== active}
-        >
-          {b.cover && (
-            <img
-              src={b.cover.url}
-              alt=""
-              className="h-full w-full object-cover object-top blur-[1px] scale-105"
-            />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/20" />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/30 to-transparent" />
-        </div>
-      ))}
+      {/* Only the active hero image is mounted. Previously every carousel
+          slide downloaded its cover on first paint, making mobile startup
+          unnecessarily heavy on slower connections. */}
+      <div className="absolute inset-0" aria-hidden="true">
+        {book.cover && (
+          <img
+            key={book.slug}
+            src={book.cover.url}
+            alt=""
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            className="h-full w-full object-cover object-top blur-[1px] scale-105"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/30 to-transparent" />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 flex h-full flex-col justify-end px-4 pb-14 sm:px-6 sm:pb-20 lg:px-10">
