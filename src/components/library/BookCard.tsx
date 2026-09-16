@@ -13,24 +13,27 @@ const localCovers: Record<string, string> = {
   "a-room-of-ones-own": "/English-library-/covers/a-room-of-ones-own.svg",
   "a-literature-of-their-own": "/English-library-/covers/a-literature-of-their-own.svg",
   "in-other-worlds": "/English-library-/covers/in-other-worlds.svg",
+  "under-western-eyes": "/English-library-/covers/under-western-eyes.svg",
+  "the-madwoman-in-the-attic": "/English-library-/covers/the-madwoman-in-the-attic.svg",
+  "the-purloined-letter": "/English-library-/covers/the-purloined-letter.svg",
+  "o-captain-my-captain": "/English-library-/covers/o-captain-my-captain.svg",
+  "mending-wall": "/English-library-/covers/mending-wall.svg",
+  "the-negro-speaks-of-rivers": "/English-library-/covers/the-negro-speaks-of-rivers.svg",
+  "a-far-cry-from-africa": "/English-library-/covers/a-far-cry-from-africa.svg",
+  "the-white-fiends": "/English-library-/covers/the-white-fiends.svg",
+  "small-towns-and-the-river": "/English-library-/covers/small-towns-and-the-river.svg",
 };
 
 function CoverFallback({ title, author }: { title: string; author: string }) {
   return (
     <div className="flex h-full w-full flex-col justify-between bg-[#171513] p-4 text-left">
       <div>
-        <p className="font-mono text-[8px] uppercase tracking-[0.24em] text-bronze">
-          English Literature
-        </p>
+        <p className="font-mono text-[8px] uppercase tracking-[0.24em] text-bronze">English Literature</p>
         <div className="mt-3 h-px w-10 bg-bronze/60" />
       </div>
       <div>
-        <p className="font-display text-base font-semibold leading-tight text-ivory">
-          {title}
-        </p>
-        <p className="mt-2 font-mono text-[9px] uppercase tracking-wider text-ivory-faint">
-          {author}
-        </p>
+        <p className="font-display text-base font-semibold leading-tight text-ivory">{title}</p>
+        <p className="mt-2 font-mono text-[9px] uppercase tracking-wider text-ivory-faint">{author}</p>
       </div>
     </div>
   );
@@ -63,13 +66,9 @@ export function BookCard({ book }: { book: Book }) {
         </div>
       </div>
       <div className="mt-2.5 space-y-0.5">
-        <p className="line-clamp-2 font-display text-sm font-semibold leading-snug text-ivory group-hover:text-bronze-bright">
-          {book.title}
-        </p>
+        <p className="line-clamp-2 font-display text-sm font-semibold leading-snug text-ivory group-hover:text-bronze-bright">{book.title}</p>
         <p className="truncate text-xs text-ivory-faint">{author?.name}</p>
-        <p className="font-mono text-[10px] uppercase tracking-wide text-ivory-faint/70">
-          {book.publicationYear} · {book.genre.replace("-", " ")}
-        </p>
+        <p className="font-mono text-[10px] uppercase tracking-wide text-ivory-faint/70">{book.publicationYear} · {book.genre.replace("-", " ")}</p>
       </div>
     </Link>
   );
