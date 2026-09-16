@@ -5,17 +5,35 @@ import type { Book } from "../../types";
 import { authorBySlug } from "../../data/authors";
 import { periodBySlug } from "../../data/periods";
 
+function shouldReduceHeroTraffic() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
+
+  const connection = (navigator as Navigator & {
+    connection?: { saveData?: boolean; effectiveType?: string };
+  }).connection;
+
+  return Boolean(
+    connection?.saveData ||
+      (connection?.effectiveType && ["slow-2g", "2g", "3g"].includes(connection.effectiveType)),
+  );
+}
+
 export function HeroCarousel({ books }: { books: Book[] }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [reduceHeroTraffic, setReduceHeroTraffic] = useState(false);
 
   const next = useCallback(() => setActive((i) => (i + 1) % books.length), [books.length]);
 
   useEffect(() => {
-    if (paused || books.length <= 1) return;
+    setReduceHeroTraffic(shouldReduceHeroTraffic());
+  }, []);
+
+  useEffect(() => {
+    if (paused || reduceHeroTraffic || books.length <= 1) return;
     const t = setInterval(next, 7000);
     return () => clearInterval(t);
-  }, [paused, next, books.length]);
+  }, [paused, reduceHeroTraffic, next, books.length]);
 
   if (books.length === 0) return null;
   const book = books[active];
@@ -87,6 +105,7 @@ export function HeroCarousel({ books }: { books: Book[] }) {
               key={b.slug}
               onClick={() => setActive(i)}
               aria-label={`Show ${b.title}`}
+              aria-pressed={i === active}
               className={`h-1 rounded-full transition-all duration-300 ${
                 i === active ? "w-7 bg-bronze" : "w-3 bg-ivory/25 hover:bg-ivory/50"
               }`}
