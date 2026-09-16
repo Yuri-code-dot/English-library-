@@ -77,7 +77,7 @@ export function SubjectDetailPage() {
                 className="flex items-center gap-3 rounded-lg border border-border bg-surface px-3 py-2 transition-colors hover:border-bronze/50"
               >
                 {a.portrait && (
-                  <img src={a.portrait.url} alt="" className="h-10 w-10 rounded-full object-cover" />
+                  <img src={a.portrait.url} alt="" loading="lazy" decoding="async" className="h-10 w-10 rounded-full object-cover" />
                 )}
                 <span className="text-sm font-medium text-ivory">{a.name}</span>
               </Link>
@@ -150,7 +150,7 @@ function TextListSection({ title, items }: { title: string; items: string[] }) {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="mt-10 border-t border-border/70 pt-6">
+    <div className="mt-10 border-t border-border/70 pt-6 [content-visibility:auto] [contain-intrinsic-size:0_220px]">
       <h2 className="mb-4 font-display text-lg font-semibold text-ivory">{title}</h2>
       {children}
     </div>
