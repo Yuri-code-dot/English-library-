@@ -61,8 +61,14 @@ export function Footer() {
         </div>
 
         <div className="mt-6 flex flex-col items-start justify-between gap-4 border-t border-border/70 pt-6 sm:flex-row sm:items-center">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs text-ivory-faint">
+            <Link to="/privacy" className="hover:text-bronze-bright">Privacy</Link>
+            <Link to="/cookies" className="hover:text-bronze-bright">Cookies</Link>
+            <Link to="/terms" className="hover:text-bronze-bright">Terms</Link>
+            <Link to="/contact" className="hover:text-bronze-bright">Contact</Link>
+          </div>
           <a
-            href="https://github.com"
+            href="https://github.com/Yuri-code-dot/English-library-"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 font-mono text-xs italic text-ivory-faint transition-colors hover:text-bronze-bright"
