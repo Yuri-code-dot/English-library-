@@ -24,7 +24,7 @@ export function ContentRail({
   };
 
   return (
-    <section className="py-8">
+    <section className="py-8 [content-visibility:auto] [contain-intrinsic-size:0_420px]">
       <SectionHeading
         eyebrow={eyebrow}
         title={title}
