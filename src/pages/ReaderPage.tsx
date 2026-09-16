@@ -47,7 +47,14 @@ export function ReaderPage() {
   const book = slug ? bookBySlug(slug) ?? syllabusBookBySlug(slug) : undefined;
   const author = book ? authorBySlug(book.authorSlug) ?? syllabusAuthorBySlug(book.authorSlug) : undefined;
   const rawText = slug ? readingTexts[slug] : undefined;
-  const [fontSize, setFontSize] = useState(18);
+  const [fontSize, setFontSize] = useState(() => {
+    try {
+      const saved = Number(localStorage.getItem("english-library-reader-font-size"));
+      return Number.isFinite(saved) ? Math.min(24, Math.max(15, saved)) : 18;
+    } catch {
+      return 18;
+    }
+  });
   const [showContents, setShowContents] = useState(true);
   const [mode, setMode] = useState<"original" | "study">("original");
   const [progress, setProgress] = useState(0);
@@ -70,13 +77,35 @@ export function ReaderPage() {
   }, [slug]);
 
   useEffect(() => {
-    const onScroll = () => {
+    try {
+      localStorage.setItem("english-library-reader-font-size", String(fontSize));
+    } catch {
+      // Ignore storage failures in private/restricted browser contexts.
+    }
+  }, [fontSize]);
+
+  useEffect(() => {
+    let timeoutId: number | undefined;
+    const updateProgress = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(scrollable > 0 ? Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100)) : 0);
+      const nextProgress = scrollable > 0 ? Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100)) : 0;
+      setProgress(nextProgress);
     };
+
+    const onScroll = () => {
+      if (timeoutId !== undefined) return;
+      timeoutId = window.setTimeout(() => {
+        timeoutId = undefined;
+        updateProgress();
+      }, 50);
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    updateProgress();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+    };
   }, [mode, blocks.length]);
 
   if (!book || !rawText) {
