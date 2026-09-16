@@ -4,6 +4,17 @@ import type { Book } from "../../types";
 import { authorBySlug } from "../../data/authors";
 import { syllabusAuthorBySlug } from "../../data/syllabusAuthors";
 
+const localCovers: Record<string, string> = {
+  "the-father": "/English-library-/covers/the-father.svg",
+  "life-of-galileo": "/English-library-/covers/life-of-galileo.svg",
+  "waiting-for-godot": "/English-library-/covers/waiting-for-godot.svg",
+  "the-birthday-party": "/English-library-/covers/the-birthday-party.svg",
+  "the-second-sex-introduction": "/English-library-/covers/the-second-sex-introduction.svg",
+  "a-room-of-ones-own": "/English-library-/covers/a-room-of-ones-own.svg",
+  "a-literature-of-their-own": "/English-library-/covers/a-literature-of-their-own.svg",
+  "in-other-worlds": "/English-library-/covers/in-other-worlds.svg",
+};
+
 function CoverFallback({ title, author }: { title: string; author: string }) {
   return (
     <div className="flex h-full w-full flex-col justify-between bg-[#171513] p-4 text-left">
@@ -27,8 +38,11 @@ function CoverFallback({ title, author }: { title: string; author: string }) {
 
 export function BookCard({ book }: { book: Book }) {
   const author = authorBySlug(book.authorSlug) ?? syllabusAuthorBySlug(book.authorSlug);
+  const localCover = localCovers[book.slug];
   const [imageFailed, setImageFailed] = useState(false);
-  const showFallback = !book.cover || imageFailed;
+  const coverUrl = localCover ?? book.cover?.url;
+  const coverAlt = book.cover?.alt ?? `Designed catalogue cover for ${book.title} by ${author?.name ?? "Unknown author"}`;
+  const showFallback = !coverUrl || imageFailed;
 
   return (
     <Link to={`/library/${book.slug}`} className="group w-36 shrink-0 sm:w-44">
@@ -37,8 +51,8 @@ export function BookCard({ book }: { book: Book }) {
           <CoverFallback title={book.title} author={author?.name ?? "Unknown author"} />
         ) : (
           <img
-            src={book.cover.url}
-            alt={book.cover.alt}
+            src={coverUrl}
+            alt={coverAlt}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             onError={() => setImageFailed(true)}
