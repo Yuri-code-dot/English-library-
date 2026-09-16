@@ -38,15 +38,29 @@ export function BookDetailPage() {
       {/* Cinematic header */}
       <div className="relative overflow-hidden">
         {book.cover && (
-          <div className="absolute inset-0">
-            <img src={book.cover.url} alt="" className="h-full w-full scale-110 object-cover object-top blur-md opacity-30" />
+          <div className="absolute inset-0" aria-hidden="true">
+            <img
+              src={book.cover.url}
+              alt=""
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              className="h-full w-full scale-110 object-cover object-top blur-md opacity-30"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/95 to-ink/60" />
           </div>
         )}
         <div className="relative mx-auto flex max-w-[1000px] flex-col gap-6 px-4 py-12 sm:flex-row sm:items-end sm:px-6 sm:py-16 lg:px-10">
           {book.cover && (
             <div className="w-40 shrink-0 overflow-hidden rounded-md border border-border shadow-2xl shadow-black/50 sm:w-56">
-              <img src={book.cover.url} alt={book.cover.alt} className="w-full object-cover" />
+              <img
+                src={book.cover.url}
+                alt={book.cover.alt}
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+                className="aspect-[2/3] w-full object-cover"
+              />
             </div>
           )}
           <div>
@@ -94,7 +108,7 @@ export function BookDetailPage() {
               className="flex items-center gap-4 rounded-lg border border-border bg-surface p-4 transition-colors hover:border-bronze/50"
             >
               {author.portrait && (
-                <img src={author.portrait.url} alt="" className="h-14 w-14 rounded-full object-cover" />
+                <img src={author.portrait.url} alt="" loading="lazy" decoding="async" className="h-14 w-14 rounded-full object-cover" />
               )}
               <div>
                 <p className="font-display font-semibold text-ivory">{author.name}</p>
@@ -214,7 +228,7 @@ function LineageArrow() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="mt-10 border-t border-border/70 pt-6 first:mt-0 first:border-t-0 first:pt-0">
+    <div className="mt-10 border-t border-border/70 pt-6 first:mt-0 first:border-t-0 first:pt-0 [content-visibility:auto] [contain-intrinsic-size:0_180px]">
       <h2 className="mb-4 font-display text-lg font-semibold text-ivory">{title}</h2>
       {children}
     </div>
