@@ -1,32 +1,49 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { Book } from "../../types";
 import { authorBySlug } from "../../data/authors";
 import { syllabusAuthorBySlug } from "../../data/syllabusAuthors";
-import { syllabusCoverFallback } from "../../data/syllabusCoverFallback";
+
+function CoverFallback({ title, author }: { title: string; author: string }) {
+  return (
+    <div className="flex h-full w-full flex-col justify-between bg-[#171513] p-4 text-left">
+      <div>
+        <p className="font-mono text-[8px] uppercase tracking-[0.24em] text-bronze">
+          English Literature
+        </p>
+        <div className="mt-3 h-px w-10 bg-bronze/60" />
+      </div>
+      <div>
+        <p className="font-display text-base font-semibold leading-tight text-ivory">
+          {title}
+        </p>
+        <p className="mt-2 font-mono text-[9px] uppercase tracking-wider text-ivory-faint">
+          {author}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export function BookCard({ book }: { book: Book }) {
   const author = authorBySlug(book.authorSlug) ?? syllabusAuthorBySlug(book.authorSlug);
-  const fallbackCover = syllabusCoverFallback(book.title, author?.name ?? "English Literature");
-  const cover = book.cover ?? fallbackCover;
+  const [imageFailed, setImageFailed] = useState(false);
+  const showFallback = !book.cover || imageFailed;
 
   return (
-    <Link
-      to={`/library/${book.slug}`}
-      className="group w-36 shrink-0 sm:w-44"
-    >
+    <Link to={`/library/${book.slug}`} className="group w-36 shrink-0 sm:w-44">
       <div className="relative aspect-[2/3] overflow-hidden rounded-md border border-border bg-surface-raised shadow-lg shadow-black/30 transition-transform duration-300 ease-out group-hover:-translate-y-1.5 group-hover:border-bronze/50">
-        <img
-          src={cover.url}
-          alt={cover.alt}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          onError={(event) => {
-            const image = event.currentTarget;
-            if (image.src !== fallbackCover.url) {
-              image.src = fallbackCover.url;
-            }
-          }}
-        />
+        {showFallback ? (
+          <CoverFallback title={book.title} author={author?.name ?? "Unknown author"} />
+        ) : (
+          <img
+            src={book.cover.url}
+            alt={book.cover.alt}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            onError={() => setImageFailed(true)}
+          />
+        )}
         <div className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-ink/90 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100">
           <span className="p-3 font-mono text-[10px] uppercase tracking-wider text-bronze-bright">Read now →</span>
         </div>
