@@ -237,7 +237,7 @@ export function ReaderPage() {
                 <section className="rounded-xl border border-border bg-surface p-6">
                   <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-bronze">Key themes</p>
                   <div className="mt-3 flex flex-wrap gap-2">
-                    {book.themes.map((theme) => (
+                    {(book.themes ?? []).map((theme) => (
                       <span key={theme} className="rounded-full border border-border bg-surface-raised px-3 py-1.5 text-xs text-ivory-dim">
                         {theme}
                       </span>
