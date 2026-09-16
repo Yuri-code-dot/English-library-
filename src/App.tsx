@@ -15,6 +15,9 @@ import { ResourcesPage, SourcesCreditsPage } from "./pages/ResourcesPage";
 import { ReaderPage } from "./pages/ReaderPage";
 import ScholarsTrialPage from "./pages/ScholarsTrialPage";
 
+const isVercel = import.meta.env.VERCEL === "1";
+const routerBasename = isVercel ? "/" : "/English-library-";
+
 function NotFoundPage() {
   return (
     <div className="mx-auto flex max-w-[800px] flex-col items-center gap-2 px-4 py-24 text-center">
@@ -26,7 +29,7 @@ function NotFoundPage() {
 
 function App() {
   return (
-    <BrowserRouter basename="/English-library-">
+    <BrowserRouter basename={routerBasename}>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
