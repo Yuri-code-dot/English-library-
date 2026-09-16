@@ -17,6 +17,10 @@ const ResourcesPage = lazy(() => import("./pages/ResourcesPage").then((module) =
 const SourcesCreditsPage = lazy(() => import("./pages/ResourcesPage").then((module) => ({ default: module.SourcesCreditsPage })));
 const ReaderPage = lazy(() => import("./pages/ReaderPage").then((module) => ({ default: module.ReaderPage })));
 const ScholarsTrialPage = lazy(() => import("./pages/ScholarsTrialPage"));
+const PrivacyPage = lazy(() => import("./pages/LegalPage").then((module) => ({ default: module.PrivacyPage })));
+const CookiesPage = lazy(() => import("./pages/LegalPage").then((module) => ({ default: module.CookiesPage })));
+const TermsPage = lazy(() => import("./pages/LegalPage").then((module) => ({ default: module.TermsPage })));
+const ContactPage = lazy(() => import("./pages/LegalPage").then((module) => ({ default: module.ContactPage })));
 
 const routerBasename = window.location.pathname.startsWith("/English-library-") ? "/English-library-" : "/";
 
@@ -61,6 +65,10 @@ function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/resources/sources" element={<SourcesCreditsPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/cookies" element={<CookiesPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
