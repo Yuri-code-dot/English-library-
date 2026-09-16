@@ -6,6 +6,7 @@ import { subjectBySlug } from "../data/subjects";
 import { BookCard } from "../components/library/BookCard";
 import { SourceCredit } from "../components/ui/SourceCredit";
 import { EmptyState } from "../components/ui/Primitives";
+import { AuthorPortrait } from "../components/library/AuthorPortrait";
 
 export function AuthorDetailPage() {
   const { slug } = useParams();
@@ -29,14 +30,16 @@ export function AuthorDetailPage() {
       </Link>
 
       <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start">
-        {author.portrait && (
-          <div className="w-40 shrink-0 overflow-hidden rounded-lg border border-border sm:w-52">
-            <img src={author.portrait.url} alt={author.portrait.alt} className="w-full object-cover" />
+        <div className="w-40 shrink-0 overflow-hidden rounded-lg border border-border bg-surface-raised sm:w-52">
+          <div className="aspect-square sm:aspect-[3/4]">
+            <AuthorPortrait author={author} />
+          </div>
+          {author.portrait && (
             <div className="bg-surface px-2 py-1.5">
               <SourceCredit sourceId={author.portrait.sourceId} />
             </div>
-          </div>
-        )}
+          )}
+        </div>
         <div>
           <h1 className="font-display text-3xl font-bold text-ivory sm:text-4xl">{author.name}</h1>
           <p className="mt-1 font-mono text-sm text-ivory-faint">
