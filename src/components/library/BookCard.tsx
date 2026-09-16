@@ -4,6 +4,7 @@ import type { Book } from "../../types";
 import { authorBySlug } from "../../data/authors";
 import { syllabusAuthorBySlug } from "../../data/syllabusAuthors";
 
+// Local catalogue covers are intentionally resolved here so the homepage and library cards share one source of truth.
 const localCovers: Record<string, string> = {
   "the-father": "/English-library-/covers/the-father.svg",
   "life-of-galileo": "/English-library-/covers/life-of-galileo.svg",
