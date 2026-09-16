@@ -31,20 +31,6 @@ export function Footer() {
             the way students actually navigate it — by semester, paper, subject, author, and work — rather than
             as a flat list of titles.
           </AccordionItem>
-          <AccordionItem title="Who Created This?">
-            <p className="font-display text-base not-italic text-ivory">Yuri</p>
-            <p className="mb-3 text-xs text-ivory-faint">English Literature Student · Developer · Creator of Tensoramax Lab</p>
-            <p>
-              Yuri is an English Literature student, developer, and creator of Tensoramax Lab, a student-led
-              technology initiative focused on software development, open-source experimentation, and
-              language-model research. Coming from a humanities background, he developed an interest in large
-              and small language models, dataset engineering, fine-tuning, model experimentation, retrieval
-              systems, and open-source development. English Literature Library combines his academic field with
-              his interest in building language technology and digital tools. The long-term goal is to explore
-              how language models can help students discover and navigate literature while maintaining reliable
-              source attribution.
-            </p>
-          </AccordionItem>
           <AccordionItem title="About Tensoramax Lab">
             Tensoramax Lab is an independent student-led technology and research initiative exploring practical
             software, language models, open-source tools, experimental systems, and digital infrastructure. The
